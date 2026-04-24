@@ -20,7 +20,7 @@ You can run these commands manually or configure them as periodic cronjobs.
 Identifies the best-selling products and sets their `topdata_is_topseller` flag to true, while resetting the flag for products that no longer qualify.
 
 ```bash
-bin/console productflags:update-topseller --max-products 50 --min-sales 10
+bin/console topdata:product-flags:update-topseller --max-products 50 --min-sales 10
 ```
 
 Options:
@@ -33,7 +33,7 @@ Options:
 Evaluates the `releaseDate` (or `createdAt` if `releaseDate` is empty) and sets the `topdata_is_fresh_product` flag to true if the product was released within the defined days.
 
 ```bash
-bin/console productflags:update-fresh --max-age 30
+bin/console topdata:product-flags:update-fresh --max-age 30
 ```
 
 Options:

@@ -18,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Topdata\TopdataProductFlagsSW6\Service\CustomFieldInstaller;
 
 #[AsCommand(
-    name: 'productflags:update-fresh',
+    name: 'topdata:product-flags:update-fresh',
     description: 'Updates the is_fresh_product custom field based on creation or release date.'
 )]
 class UpdateFreshProductCommand extends Command

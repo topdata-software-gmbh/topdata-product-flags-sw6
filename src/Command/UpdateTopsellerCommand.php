@@ -17,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Topdata\TopdataProductFlagsSW6\Service\CustomFieldInstaller;
 
 #[AsCommand(
-    name: 'productflags:update-topseller',
+    name: 'topdata:product-flags:update-topseller',
     description: 'Updates the is_topseller custom field for products based on sales.'
 )]
 class UpdateTopsellerCommand extends Command

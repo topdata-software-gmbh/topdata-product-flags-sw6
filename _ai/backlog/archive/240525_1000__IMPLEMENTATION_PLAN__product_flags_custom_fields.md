@@ -14,7 +14,7 @@ documentType: IMPLEMENTATION_PLAN
 The shop needs a way to flag products as "Topseller" (`is_topseller`) and "Fresh Product" (`is_fresh_product`). These flags must be stored as custom fields on the product entity. Furthermore, the updating of these flags needs to be automated via CLI commands that accept specific criteria (like maximum age in days, maximum product limit, etc.) so they can be run periodically (e.g., via cronjob).
 
 ## Executive Summary
-This implementation plan adds two new boolean custom fields (`topdata_is_topseller`, `topdata_is_fresh_product`) to the product entity by hooking into the plugin lifecycle. It also introduces two new Symfony Console commands (`productflags:update-topseller` and `productflags:update-fresh`) to automatically compute and assign these flags based on configurable parameters like `--max-products`, `--min-sales`, and `--max-age`. Finally, the documentation will be updated to include command usage instructions and a Twig template snippet demonstrating how to display these flags in a custom theme.
+This implementation plan adds two new boolean custom fields (`topdata_is_topseller`, `topdata_is_fresh_product`) to the product entity by hooking into the plugin lifecycle. It also introduces two new Symfony Console commands (`topdata:product-flags:update-topseller` and `topdata:product-flags:update-fresh`) to automatically compute and assign these flags based on configurable parameters like `--max-products`, `--min-sales`, and `--max-age`. Finally, the documentation will be updated to include command usage instructions and a Twig template snippet demonstrating how to display these flags in a custom theme.
 
 ## Project Environment Details
 ```
@@ -183,7 +183,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Topdata\TopdataProductFlagsSW6\Service\CustomFieldInstaller;
 
 #[AsCommand(
-    name: 'productflags:update-topseller',
+    name: 'topdata:product-flags:update-topseller',
     description: 'Updates the is_topseller custom field for products based on sales.'
 )]
 class UpdateTopsellerCommand extends Command
@@ -288,7 +288,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Topdata\TopdataProductFlagsSW6\Service\CustomFieldInstaller;
 
 #[AsCommand(
-    name: 'productflags:update-fresh',
+    name: 'topdata:product-flags:update-fresh',
     description: 'Updates the is_fresh_product custom field based on creation or release date.'
 )]
 class UpdateFreshProductCommand extends Command
@@ -454,7 +454,7 @@ You can run these commands manually or configure them as periodic cronjobs.
 Identifies the best-selling products and sets their `topdata_is_topseller` flag to true, while resetting the flag for products that no longer qualify.
 
 ```bash
-bin/console productflags:update-topseller --max-products 50 --min-sales 10
+bin/console topdata:product-flags:update-topseller --max-products 50 --min-sales 10
 ```
 **Options:**
 - `--max-products` (default 50): Maximum number of top products to flag.
@@ -464,7 +464,7 @@ bin/console productflags:update-topseller --max-products 50 --min-sales 10
 Evaluates the `releaseDate` (or `createdAt` if `releaseDate` is empty) and sets the `topdata_is_fresh_product` flag to true if the product was released within the defined days.
 
 ```bash
-bin/console productflags:update-fresh --max-age 30
+bin/console topdata:product-flags:update-fresh --max-age 30
 ```
 **Options:**
 - `--max-age` (default 30): The maximum age of the product in days to still be considered "fresh".
@@ -558,12 +558,12 @@ Successfully implemented the Product Flags custom fields and CLI functionality. 
 
 ### 5. Testing Notes
 - Run `bin/console plugin:install --activate TopdataProductFlagsSW6` and verify custom fields appear in the administration.
-- Run `bin/console productflags:update-topseller` and `bin/console productflags:update-fresh` then check your DB or Administration to ensure the custom fields toggle properly based on product properties.
+- Run `bin/console topdata:product-flags:update-topseller` and `bin/console topdata:product-flags:update-fresh` then check your DB or Administration to ensure the custom fields toggle properly based on product properties.
 - Use `bin/console plugin:uninstall TopdataProductFlagsSW6` to confirm custom fields are removed properly (without `keepUserData`).
 
 ### 6. Usage Examples
-- Make top 20 sellers topsellers if they have at least 5 sales: `bin/console productflags:update-topseller -m 20 -s 5`
-- Flag products released in the last 15 days as fresh: `bin/console productflags:update-fresh -a 15`
+- Make top 20 sellers topsellers if they have at least 5 sales: `bin/console topdata:product-flags:update-topseller -m 20 -s 5`
+- Flag products released in the last 15 days as fresh: `bin/console topdata:product-flags:update-fresh -a 15`
 
 ### 7. Documentation Updates
 Complete documentation override done on the README mapping out the CLI interface as well as explicit instructions and a code snippet on how to visualize it in the storefront.

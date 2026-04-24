@@ -29,8 +29,8 @@ Modified:
 
 ### 3. Key Changes
 - Added install/uninstall lifecycle hooks in the plugin base class and connected them to custom field lifecycle management.
-- Added `productflags:update-topseller` with options `--max-products` and `--min-sales`.
-- Added `productflags:update-fresh` with option `--max-age` and fallback from `releaseDate` to `createdAt`.
+- Added `topdata:product-flags:update-topseller` with options `--max-products` and `--min-sales`.
+- Added `topdata:product-flags:update-fresh` with option `--max-age` and fallback from `releaseDate` to `createdAt`.
 - Added chunked updates to reduce write pressure for larger product datasets.
 
 ### 4. Validation
@@ -38,8 +38,8 @@ Modified:
 - XML lint passed for `services.xml`.
 
 ### 5. Usage Examples
-- `bin/console productflags:update-topseller -m 20 -s 5`
-- `bin/console productflags:update-fresh -a 15`
+- `bin/console topdata:product-flags:update-topseller -m 20 -s 5`
+- `bin/console topdata:product-flags:update-fresh -a 15`
 
 ### 6. Notes
 - Existing example command remains untouched.
