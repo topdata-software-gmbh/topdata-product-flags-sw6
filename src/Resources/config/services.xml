@@ -18,5 +18,15 @@
                 <argument type="service" id="service_container"/>
             </call>
         </service>
+
+        <service id="Topdata\TopdataProductFlagsSW6\Command\UpdateTopsellerCommand">
+            <argument type="service" id="product.repository"/>
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Topdata\TopdataProductFlagsSW6\Command\UpdateFreshProductCommand">
+            <argument type="service" id="product.repository"/>
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>
